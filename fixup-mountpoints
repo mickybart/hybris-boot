@@ -50,8 +50,8 @@ case "$DEVICE" in
         ;;
 
     "i9305" | "encore" | "n7000" | "n7100" | "i9300" | "anzu" | \
-    "coconut" | "haida" | "hallon" | "iyokan" | "mango" | "phoenix" | \
-    "satsuma" | "smultron" | "urushi" | "zeus")
+    "coconut" | "haida" | "hallon" | "iyokan" | "mango" | "nozomi" | \
+    "phoenix" | "satsuma" | "smultron" | "urushi" | "zeus")
 	sed -i \
 	    -e 's /block/ / ' \
 	    "$@"
