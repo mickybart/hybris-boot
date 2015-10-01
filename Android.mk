@@ -39,7 +39,6 @@ HYBRIS_R_ALWAYSDEBUG := 1
 
 HYBRIS_FIXUP_MOUNTS := $(LOCAL_PATH)/fixup-mountpoints
 
-
 # Find any fstab files for required partition information.
 # in AOSP we could use TARGET_VENDOR
 # TARGET_VENDOR := $(shell echo $(PRODUCT_MANUFACTURER) | tr '[:upper:]' '[:lower:]')
@@ -61,8 +60,12 @@ endif
 
 # Get the unique /dev field(s) from the line(s) containing the fs mount point
 # Note the perl one-liner uses double-$ as per Makefile syntax
+ifeq "$(HYBRIS_BOOT_PART)" ""
 HYBRIS_BOOT_PART := $(shell /usr/bin/perl -w -e '$$fs=shift; if ($$ARGV[0]) { while (<>) { next unless /^$$fs\s|\s$$fs\s/;for (split) {next unless m(^/dev); print "$$_\n"; }}} else { print "ERROR: *fstab* not found\n";}' /boot $(HYBRIS_FSTABS) | sort -u)
+endif
+ifeq "$(HYBRIS_DATA_PART)" ""
 HYBRIS_DATA_PART := $(shell /usr/bin/perl -w -e '$$fs=shift; if ($$ARGV[0]) { while (<>) { next unless /^$$fs\s|\s$$fs\s/;for (split) {next unless m(^/dev); print "$$_\n"; }}} else { print "ERROR: *fstab* not found\n";}' /data $(HYBRIS_FSTABS) | sort -u)
+endif
 
 $(warning ********************* /boot appears to live on $(HYBRIS_BOOT_PART))
 $(warning ********************* /data appears to live on $(HYBRIS_DATA_PART))
